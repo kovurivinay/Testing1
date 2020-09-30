@@ -107,12 +107,26 @@ public class ShowsController {
 					return new ResponseEntity<>("Show not found! ", HttpStatus.BAD_REQUEST);
 				}
 				Shows fetchedshow = retrievedShow.get();
-				fetchedshow.setCost(shows.getCost());
-				fetchedshow.setMovieName(shows.getMovieName());
-				fetchedshow.setSeatingCapacity(shows.getSeatingCapacity());
-				fetchedshow.setShowName(shows.getShowName());
-				fetchedshow.setTheatreName(shows.getTheatreName());
-				fetchedshow.setDate(shows.getDate());
+				if (shows.getCost()!=null) {
+					fetchedshow.setCost(shows.getCost());
+				}
+				if (shows.getMovieName().length()!=0) {
+					fetchedshow.setMovieName(shows.getMovieName());	
+				}
+				if (shows.getSeatingCapacity()!=null) {
+					fetchedshow.setSeatingCapacity(shows.getSeatingCapacity());	
+				}
+				if (shows.getShowName().length()!=0) {
+					fetchedshow.setShowName(shows.getShowName());	
+				}
+				if (shows.getTheatreName().length()!=0) {
+					fetchedshow.setTheatreName(shows.getTheatreName());	
+				}
+				System.out.println(shows.getDate());
+				if (shows.getDate()!=null) {
+					fetchedshow.setDate(shows.getDate());	
+				}
+				
 				this.showsDao.save(fetchedshow);
 				return ResponseEntity.ok().build();
 			}

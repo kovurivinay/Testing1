@@ -1,5 +1,7 @@
 package com.Ticketing.Movie.Controller;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -52,6 +54,25 @@ public class MovieController {
 		}
 	}
 	
+	@GetMapping("/moviesBetweenDates")
+	public ResponseEntity<List<Movie>> getMoviesBetweenDates(@RequestParam("startDate") String d1, @RequestParam("endDate") String d2) {
+		try {
+			System.out.println("Inside moviesBetweenDates");
+			    Date startDate=new SimpleDateFormat("dd-MM-yyyy").parse(d1);  
+			    Date endDate=new SimpleDateFormat("dd-MM-yyyy").parse(d2);  
+				List<Movie> movies = this.movieService.getAllMovies();
+				List<Movie> filteredMovie = new ArrayList<>();
+				for(Movie b:movies) {
+					if (b.getReleaseDate().after(startDate) && b.getReleaseDate().before(endDate)) {
+						filteredMovie.add(b);
+					}
+				}
+			return ResponseEntity.ok(filteredMovie);
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().build();
+		}
+	}
+	
 	@GetMapping("/movies")
 	public ResponseEntity<List<Movie>> getAllMovies() {
 		try {
@@ -79,8 +100,8 @@ public class MovieController {
 	}
 	
 
-	@PutMapping("/movie/{movieName}")
-	public ResponseEntity<Object> updateMovie(@PathVariable String movieName, @RequestBody Movie movie, @RequestParam("Role") String role) {
+	@PutMapping("/movie")
+	public ResponseEntity<Object> updateMovie(@RequestBody Movie movie, @RequestParam("Role") String role) {
 		try {
 			if(role.equalsIgnoreCase("admin")){
 				Optional<Movie> fetchedmovie = this.movieService.getMovie(movie.getMovieName());
@@ -88,11 +109,21 @@ public class MovieController {
 					return new ResponseEntity<>("Movie not available!", HttpStatus.BAD_REQUEST);
 				}
 				Movie retrievedMovie = fetchedmovie.get();
-				retrievedMovie.setGenre(movie.getGenre());
-				retrievedMovie.setLanguage(movie.getLanguage());
-				retrievedMovie.setMovieName(movie.getMovieName());
-				retrievedMovie.setRating(movie.getRating());
-				retrievedMovie.setReleaseDate(movie.getReleaseDate());
+				if(movie.getGenre().length()!=0) {
+					retrievedMovie.setGenre(movie.getGenre());	
+				}
+				if(movie.getLanguage().length()!=0) {
+					retrievedMovie.setLanguage(movie.getLanguage());	
+				}
+				if(movie.getMovieName().length()!=0) {
+					retrievedMovie.setMovieName(movie.getMovieName());	
+				}
+				if(movie.getRating()!=null) {
+					retrievedMovie.setRating(movie.getRating());	
+				}
+				if(movie.getReleaseDate()!=null) {
+					retrievedMovie.setReleaseDate(movie.getReleaseDate());	
+				}
 				
 				this.movieService.addMovie(retrievedMovie);
 				return ResponseEntity.ok().build();

@@ -1,0 +1,510 @@
+
+.form-heading { color:#fff; font-size:23px;}
+.panel h2{ color:#444444; font-size:18px; margin:0 0 8px 0;}
+.panel p { color:#777777; font-size:14px; margin-bottom:30px; line-height:24px;}
+.login-form .form-control {
+  background: #f7f7f7 none repeat scroll 0 0;
+  border: 1px solid #d4d4d4;
+  border-radius: 4px;
+  font-size: 14px;
+  height: 50px;
+  line-height: 50px;
+}
+.dropdown-toggle.btn-default {
+  color: #292b2c;
+  background-color: #fff;
+  border-color: #ccc;
+}
+.bootstrap-select.show > .dropdown-menu > .dropdown-menu {
+  display: block;
+}
+.bootstrap-select > .dropdown-menu > .dropdown-menu li.hidden {
+  display: none;
+}
+.bootstrap-select > .dropdown-menu > .dropdown-menu li a {
+  display: block;
+  width: 100%;
+  padding: 3px 1.5rem;
+  clear: both;
+  font-weight: 400;
+  color: #292b2c;
+  text-align: inherit;
+  white-space: nowrap;
+  background: 0 0;
+  border: 0;
+  text-decoration: none;
+}
+.bootstrap-select > .dropdown-menu > .dropdown-menu li a:hover {
+  background-color: #f4f4f4;
+}
+.bootstrap-select > .dropdown-toggle {
+  width: 100%;
+}
+.dropdown-menu > li.active > a {
+  color: #fff !important;
+  background-color: #337ab7 !important;
+}
+.bootstrap-select .check-mark {
+  line-height: 14px;
+}
+.bootstrap-select .check-mark::after {
+  font-family: "FontAwesome";
+  content: "\f00c";
+}
+.bootstrap-select button {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+ 
+/* Make filled out selects be the same size as empty selects */
+.bootstrap-select.btn-group .dropdown-toggle .filter-option {
+  display: inline !important;
+}
+.main-div {
+  background: #ffffff none repeat scroll 0 0;
+  border-radius: 2px;
+  margin: 10px auto 30px;
+  max-width: 38%;
+  padding: 50px 70px 70px 71px;
+  border: 2px solid black;
+}
+
+.login-form .form-group {
+  margin-bottom:10px;
+}
+.login-form{ text-align:center;}
+.forgot a {
+  color: #777777;
+  font-size: 14px;
+  text-decoration: underline;
+}
+.login-form  .btn.btn-primary {
+  background: #f0ad4e none repeat scroll 0 0;
+  border-color: #f0ad4e;
+  color: #ffffff;
+  font-size: 14px;
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  padding: 0;
+}
+.forgot {
+  text-align: left; margin-bottom:30px;
+}
+.botto-text {
+  color: #ffffff;
+  font-size: 14px;
+  margin: auto;
+}
+.back { text-align: left; margin-top:10px;}
+.back a {color: #444444; font-size: 13px;text-decoration: none;}
+
+
+/*Home */
+.inc-width{
+  
+  width: 20px;
+  
+}
+
+.HeadLine{
+  
+  color: rgb(255, 255, 255);
+  font-size: 22px;
+  font-weight: bold;
+  width: 80%;
+  margin: 0px auto 0px auto
+  
+  
+}
+
+.HomeContent {
+  width: 80%;
+  margin: 0px auto 0px auto}
+.place{
+  width: 18%;
+height: 60px;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 10px 4px;
+    font-size: 14px;
+    font-weight: bold;
+    background: #eeeef3; /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+.place1{
+  width: 15%;
+height: 56px;
+    padding: 8px;
+    margin: 10px 4px;
+    font-size: 18px;
+    
+    
+}
+    
+#p1{
+  width: 25%;
+}
+
+/*List props */
+.listBody{
+  background-color: #f0ebeb;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.listBody1{
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.shadow-vin{
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+/*Details*/
+
+.btn{
+  margin-left: 30%;
+  width: 20%
+}
+.desc1{
+  font-size: 16px;
+}
+.details_item{
+  padding: 0px 0px 0px 0px;
+  margin: 20px 4px;
+}
+
+/*Bookingops */
+.form-check{
+  margin: 20px 4px;
+}
+
+input[type="radio"] {
+  margin-right: 2%;
+}
+
+.reco{
+  margin-left: 2%;
+}
+
+.checkbox{
+  font-size: 17px;
+  
+}
+
+.btn-rounded{
+  border-radius: 15px;
+}
+
+.user-photo{
+  background-image:url('https://image.flaticon.com/icons/svg/126/126486.svg');
+  }
+
+.Pcontainer{
+  border-style: solid;
+  border-width: .5px;
+  padding-bottom: 10px;
+  
+ }
+ .Pcontainer1{
+  border-style: solid;
+  border-width: .5px;
+  padding: 10px;
+  margin:10px
+ }
+ .fa {
+  padding: 15px;
+  font-size: 13px;
+  width: 40px;
+  text-align: center;
+  text-decoration: none;
+  margin: 5px 5px;
+  border-radius: 50%;
+}
+
+.fa:hover {
+    opacity: 0.7;
+}
+
+.fa-facebook {
+  background: #3B5998;
+  color: white;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {display:none;}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+} 
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+#viewProfileButton{
+  width: 25%;
+}
+
+.primary1 {
+  background-color: #ff8a00;
+  color: #fff;
+  text-shadow: none;
+  border-color: #ff8a00;
+  border-radius: 0;
+  width: 318px;
+  font-size: 18px;
+  
+}
+
+.fbbutton{
+  background-color: #3B5998;
+  color: #fff;
+  text-shadow: none;
+  border-color: #3B5998;
+  border-radius: 0;
+  width: 318px;
+  font-size: 18px;
+}
+.gbutton{
+  margin-top: 10px;
+  background-color: #787878;
+  text-shadow: none;
+  border-color: #787878;
+  background: #f3f3f3;
+  border: 1px solid #f3f3f3;
+  color:black;
+  border-radius: 0;
+  width: 318px;
+  font-size: 18px;
+}
+.fbcolor{
+  background-color: #3B5998;
+  color: #fff;
+  
+  border-color: #3B5998;
+  border-radius: 0;
+}
+.gcolor{
+  
+  text-shadow: none;
+  
+  color:black;
+  border-radius: 0;
+}
+
+.backb{
+  background-color: #ffffff;
+}
+
+.signUpContainer{
+  margin : 0px 20% 0px 20%;
+  text-align: center;
+}
+
+.input1{
+  height: 44px;
+    margin:10%;
+    padding: 9px 14px;
+    font-size: 18px;
+    line-height: 1.33;
+    border-radius: 0;
+}
+
+.input3{
+  margin-top: 5%
+}
+
+.signin1{
+  background-color: #ff8a00;
+    color: #fff;
+    text-shadow: none;
+    border-color: #ff8a00;
+}
+
+.margin-top1{
+  margin-top: 3%;
+}
+
+.margin-bottom1{
+  margin-bottom: 3%;
+}
+
+.traveler{
+  font-size: 13px;
+  position: relative;
+}
+
+.photo-border{
+  height: 200px;
+  border-style: dotted;
+}
+
+.border1{
+  border-style: ridge;
+  height: 200px;
+  margin-left: 4%
+
+}
+.center1{
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+  }
+
+.center2{
+  margin: 20%
+}
+
+.back-gray{
+  background-color: #f8f7f7
+}
+
+.padding-left-1{
+  padding-left: 3%
+}
+
+.HitInfo__details{
+  -webkit-flex-flow: row wrap; /* Safari 6.1+ */
+    display: flex;
+    flex-flow: row wrap;
+
+}
+
+.Details__label{
+  margin: 0 .4em;
+    font-weight: 700;
+    color: #546983;
+    content: "\B7";
+}
+
+.container1 {
+  width: 160px;
+  height: 185px;
+}
+.container1 img {
+  width: 120%;
+  height: 90%;
+}
+
+.border-prs{
+  border-style: ridge;
+}
+
+.border-prs1{
+  border-style: ridge;
+  height: 500px;
+}
+.border-dates{
+  border-style: ridge;
+  height: 100px;
+}
+.container2{
+  width: 78%;
+  height: auto;
+}
+
+.container-img{
+  width: 100%;
+  height: 500px;
+}
+.container-img img {
+  width: 100%;
+  height: auto;
+}
+
+.free-space{
+  height: 30px;
+}
+
+
+
+.bg-img {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background:url("../src/imgs/movie-ticketing.jpg")
+  center center no-repeat;
+  background-size: cover;
+  -webkit-filter: drop-shadow(8px 8px 10px gray); /* Safari 6.0 - 9.0 */
+    filter: drop-shadow(8px 8px 10px gray);
+}
+
+.movie-img {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background:url("../src/imgs/1.jpeg")
+  center center no-repeat;
+  background-size: cover;
+  -webkit-filter: drop-shadow(8px 8px 10px gray); /* Safari 6.0 - 9.0 */
+    filter: drop-shadow(8px 8px 10px gray);
+}
+
+.hover_pointer{
+  cursor: pointer;
+}
+
+.margin-minus{
+  margin-bottom: -5px;
+}
+
+.text1{
+  text-align: right
+}
+
+.rounded1{
+  border-radius: 25px;
+}
+
+.margin-icon{
+  /* margin:10px; */
+  padding-left: 10px;
+}
+
+.margin-top-messages{
+  margin-top: 43%;
+}

@@ -117,7 +117,7 @@ public class UserController {
 	@PutMapping("/user/{email}")
 	public ResponseEntity<Object> updateUser(@PathVariable String email, @RequestBody User user) {
 		try {
-			
+
 				List<User> users = userDao.findUserByEmail(email);
 				if (users.size() == 0) {
 					return new ResponseEntity<>("FAILURE-Email does not Exists", HttpStatus.BAD_REQUEST);
@@ -127,8 +127,9 @@ public class UserController {
 				fetchedUser.setUserName(user.getUserName());
 				fetchedUser.setPassword(user.getPassword());
 				fetchedUser.setRole(user.getRole());
+				fetchedUser.setPhonenumber(user.getPhonenumber());
 				
-				this.userService.addUser(user);
+				this.userService.addUser(fetchedUser);
 				return ResponseEntity.ok().build();
 		} catch (Exception e) {
 			return ResponseEntity.badRequest().build();
@@ -146,4 +147,15 @@ public class UserController {
 			return ResponseEntity.badRequest().build();
 		}
 	}
+	
+	@GetMapping("/user/{email}")
+	public ResponseEntity<List<User>> getUser(@PathVariable String email) {
+		try {
+			List<User> user = this.userService.getUserByEmail(email);
+			return ResponseEntity.ok(user);
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().build();
+		}
+	}
+	
 }

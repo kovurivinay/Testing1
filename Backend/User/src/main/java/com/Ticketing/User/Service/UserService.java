@@ -38,9 +38,9 @@ public class UserService {
 		this.userDao.deleteByEmail(email);
 	}
 
-//	public List<User> getUserByEmail(String email){
-//		return this.userDao.findUserByEmail(email);
-//	}
+	public List<User> getUserByEmail(String email){
+		return this.userDao.findUserByEmail(email);
+	}
 
 }	
 

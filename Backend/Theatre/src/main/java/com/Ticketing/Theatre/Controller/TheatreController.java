@@ -78,16 +78,25 @@ public class TheatreController {
 	}
 	
 
-	@PutMapping("/theatre/{theatreName}")
-	public ResponseEntity<Theatre> updateTheatre(@RequestBody Theatre theatre, @RequestParam("Role") String role) {
+	@PutMapping("/theatre")
+	public ResponseEntity<Object> updateTheatre(@RequestBody Theatre theatre, @RequestParam("Role") String role) {
 		try {
 			if(role.equalsIgnoreCase("admin")){
 				Optional<Theatre> retrievedtheatre = this.theatreService.getTheatre(theatre.getTheatreName());
+				if (!retrievedtheatre.isPresent()) {
+					return new ResponseEntity<>("Theatre name not present!", HttpStatus.BAD_REQUEST);
+				}
 				Theatre fetchedTheatre = retrievedtheatre.get();
-				fetchedTheatre.setTheatreName(theatre.getTheatreName());
-				fetchedTheatre.setLocation(theatre.getLocation());
-				//fetchedTheatre.setMovieName(theatre.getMovieName());
-				fetchedTheatre.setSeatingCapacity(theatre.getSeatingCapacity());
+				if(theatre.getTheatreName().length()!=0) {
+					fetchedTheatre.setTheatreName(theatre.getTheatreName());	
+				}
+				if(theatre.getLocation().length()!=0) {
+					fetchedTheatre.setLocation(theatre.getLocation());	
+				}
+				if(theatre.getSeatingCapacity()!=null) {
+					fetchedTheatre.setSeatingCapacity(theatre.getSeatingCapacity());	
+				}
+				
 				this.theatreService.addTheatre(fetchedTheatre);
 				return ResponseEntity.ok().build();
 			}
