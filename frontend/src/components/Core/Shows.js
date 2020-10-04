@@ -3,6 +3,7 @@ import '../../App.css';
 import axios from 'axios';
 import Footer from '../Footer';
 import { Booking_IP, Booking_Port, Movie_IP, Movie_Port, Theatre_IP, Theatre_Port } from "../../config";
+import ToggleDisplay from 'react-toggle-display';
 
 class Shows extends Component {
     constructor() {
@@ -44,8 +45,16 @@ class Shows extends Component {
     addShow = (e) => {
         e.preventDefault();
 
-        var d= new Date(this.state.date)
-        this.state.date=d.getUTCDate()+"-"+(d.getUTCMonth()+1)+"-"+d.getUTCFullYear();
+        var d = new Date(this.state.date)
+        this.state.date = d.getUTCDate() + "-" + (d.getUTCMonth() + 1) + "-" + d.getUTCFullYear();
+
+        var today= new Date();
+        today.setHours(0,0,0,0);
+        // today=today.getUTCDate() + "-" + (today.getUTCMonth() + 1) + "-" + today.getUTCFullYear();
+        if (today>d){
+            alert("Date should be greater than present date")
+            return
+        }
 
         const data = {
             theatreName: this.state.theatreName,
@@ -58,43 +67,46 @@ class Shows extends Component {
         console.log(data)
 
         axios.get(Theatre_IP + Theatre_Port + `/theatre/${data.theatreName}`)
-        .then((response) => {
-            console.log("Theatre is available")
-
-            axios.get(Movie_IP + Movie_Port + `/movie/${data.movieName}`)
             .then((response) => {
-                console.log("Movie is available")
+                console.log("Theatre is available")
 
-                axios.post(Booking_IP + Booking_Port + '/shows?Role=' + localStorage.getItem("cookie"), data)
-                .then((response) => {
-                    console.log("Status Code : ", response.data);
-                    if (response.status === 200) {
-                        alert("Show Added")
-                    } else {
-                        console.log("not done")
-                    }
-    
-                });
+                axios.get(Movie_IP + Movie_Port + `/movie/${data.movieName}`)
+                    .then((response) => {
+                        console.log("Movie is available",response.data)
+                        if(new Date(response.data.releaseDate)>new Date(d)){
+                            alert("Date should be greater than movie release date")
+                            return
+                        }
+                        axios.post(Booking_IP + Booking_Port + '/shows?Role=' + localStorage.getItem("cookie"), data)
+                            .then((response) => {
+                                console.log("Status Code : ", response.data);
+                                if (response.status === 200) {
+                                    alert("Show Added")
+                                } else {
+                                    console.log("not done")
+                                }
+
+                            });
+
+                    }).catch(err => {
+                        alert("Please Add the Movie first.")
+                        console.log(err);
+                    });
+
 
             }).catch(err => {
-                alert("Please Add the Movie first.")
+                alert("Please Add the Theatre first.")
                 console.log(err);
-            });
-
-
-        }).catch(err => {
-            alert("Please Add the Theatre first.")
-            console.log(err);
-        })
+            })
 
     }
 
     updateShow = (e) => {
         e.preventDefault();
 
-        var d= new Date(this.state.date)
-        this.state.date=d.getUTCDate()+"-"+(d.getUTCMonth()+1)+"-"+d.getUTCFullYear();
-
+        var d = new Date(this.state.date)
+        this.state.date = d.getUTCDate() + "-" + (d.getUTCMonth() + 1) + "-" + d.getUTCFullYear();
+        
         const data = {
             theatreName: this.state.theatreName,
             movieName: this.state.movieName,
@@ -159,15 +171,19 @@ class Shows extends Component {
                     <li class="nav-item">
                         <a class="nav-link active" data-toggle="tab" href="#GetShows" role="tab" aria-controls="home" aria-selected="true">Get All Shows</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link " data-toggle="tab" href="#AddShow" role="tab" aria-controls="settings" aria-selected="false">Add Show</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#UpdateShow" role="tab" aria-controls="messages" aria-selected="false">Update Show</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#DeleteShow" role="tab" aria-controls="profile" aria-selected="false">Delete Show</a>
-                    </li>
+                    <ToggleDisplay if={localStorage.getItem('cookie') == "admin"}>
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link " data-toggle="tab" href="#AddShow" role="tab" aria-controls="settings" aria-selected="false">Add Show</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#UpdateShow" role="tab" aria-controls="messages" aria-selected="false">Update Show</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#DeleteShow" role="tab" aria-controls="profile" aria-selected="false">Delete Show</a>
+                            </li>
+                        </ul>
+                    </ToggleDisplay>
 
                 </ul>
 

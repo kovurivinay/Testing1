@@ -120,13 +120,13 @@ public class BookingController {
 	@PostMapping("/booking")
 	public ResponseEntity<Object> addNewBooking(@RequestBody Booking booking) {
 		try {
-				List<Shows> shows = this.showsService.getShowsWithTheatreAndMovie(booking.getTheatreName(), booking.getMovieName());
-				if (shows.isEmpty()) {
-					System.out.println("No show present with given theatrename and moviename");
+				Optional<Shows> retrievedShow = this.showsService.getShowsWithId(booking.getId());
+				if (!retrievedShow.isPresent()) {
+					System.out.println("No show present!");
 					return new ResponseEntity<>("No show present with given theatrename and moviename!", HttpStatus.BAD_REQUEST);
 				}
 				else {
-					for(Shows show:shows) {
+					Shows show = retrievedShow.get();
 						if (show.getDate().compareTo(booking.getDate())==0){
 							Integer remainingTickets = show.getSeatingCapacity()-booking.getTicketCount();
 							if (remainingTickets >=0) {
@@ -139,7 +139,6 @@ public class BookingController {
 							}
 						}
 					}
-				}
 				return ResponseEntity.ok(this.bookingService.addBooking(booking));
 			
 		} catch (Exception e) {
@@ -159,6 +158,28 @@ public class BookingController {
 		}
 	}
 	
+	@DeleteMapping("/deleteBookingByMovie/{movieName}")
+	public ResponseEntity<Booking> deleteBookingMovie(@PathVariable String movieName) {
+		try {
+			this.bookingService.deleteBookingByMovieName(movieName);
+			this.showsService.deleteShowByMovieName(movieName);
+			return ResponseEntity.ok().build();
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().build();
+		}
+	}
+	
+	@DeleteMapping("/deleteBookingByTheatre/{theatreName}")
+	public ResponseEntity<Booking> deleteBookingTheatre(@PathVariable String theatreName) {
+		try {
+			this.bookingService.deleteBookingByTheatreName(theatreName);
+			this.showsService.deleteShowByTheatreName(theatreName);
+			return ResponseEntity.ok().build();
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().build();
+		}
+	}
+	
 	@PostMapping("/cancelBooking/{username}/{bookingId}")
 	public ResponseEntity<Object> cancelBooking(@PathVariable String username, @PathVariable int bookingId) {
 		try {
@@ -170,6 +191,23 @@ public class BookingController {
 			currentBooking.setCancelled(true);
 			this.bookingDao.save(currentBooking);
 			
+			return ResponseEntity.ok().build();
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().build();
+		}
+	}
+	
+	@PostMapping("/cancelBooking/{username}")
+	public ResponseEntity<Object> cancelBooking(@PathVariable String username) {
+		try {
+			List<Booking> bookings = this.bookingService.getBooking(username);
+			if (bookings.isEmpty()) {
+				return ResponseEntity.notFound().build();
+			}
+			for(Booking currentBooking:bookings) {
+				currentBooking.setCancelled(true);
+				this.bookingDao.save(currentBooking);	
+			}
 			return ResponseEntity.ok().build();
 		} catch (Exception e) {
 			return ResponseEntity.badRequest().build();

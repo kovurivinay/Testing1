@@ -138,6 +138,10 @@ public class MovieController {
 	public ResponseEntity<Movie> deleteMovie(@PathVariable String movieName, @RequestParam("Role") String role) {
 		try {
 			if(role.equalsIgnoreCase("admin")){
+				Optional<Movie> movie = this.movieService.getMovie(movieName);
+				if (!movie.isPresent()) {
+					return ResponseEntity.notFound().build();
+				}
 				this.movieService.deleteMovie(movieName);
 				return ResponseEntity.ok().build();
 			}

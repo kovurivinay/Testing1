@@ -110,6 +110,10 @@ public class TheatreController {
 	public ResponseEntity<Theatre> deleteTheatre(@PathVariable String theatreName, @RequestParam("Role") String role) {
 		try {
 			if(role.equalsIgnoreCase("admin")){
+				Optional<Theatre> theatre = this.theatreService.getTheatre(theatreName);
+				if (!theatre.isPresent()) {
+					return ResponseEntity.notFound().build();
+				}
 				this.theatreService.deleteTheatre(theatreName);
 				return ResponseEntity.ok().build();
 			}

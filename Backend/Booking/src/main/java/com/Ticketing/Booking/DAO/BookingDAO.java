@@ -20,4 +20,8 @@ public interface BookingDAO extends JpaRepository<Booking, Integer>{
 
 	Optional<Booking> findBookingById(int bookingId);
 
+	void deleteByMovieName(String movieName);
+
+	void deleteByTheatreName(String theatreName);
+
 }

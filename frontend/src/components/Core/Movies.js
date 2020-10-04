@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import '../../App.css';
 import axios from 'axios';
 import Footer from '../Footer';
-import { Movie_IP, Movie_Port } from "../../config";
+import { Booking_IP, Booking_Port, Movie_IP, Movie_Port } from "../../config";
 import ToggleDisplay from 'react-toggle-display';
 
 class Movies extends Component {
@@ -60,10 +60,12 @@ class Movies extends Component {
                 if (response.status === 200) {
                     alert("Movie Added")
                 } else {
-                    console.log("not done")
+                    alert("Movie Name Taken")
                 }
 
-            });
+            }).catch((err) => {
+                alert("Movie Name Taken")
+            })
     }
 
     updateMovie = (e) => {
@@ -100,14 +102,46 @@ class Movies extends Component {
             .then((response) => {
                 console.log("Status Code : ", response.data);
                 if (response.status === 200) {
+                    axios.delete(Booking_IP + Booking_Port + `/deleteBookingByMovie/${this.state.movieName}`)
+                        .then((response) => {
+                            console.log("Status Code : ", response.data);
+                            if (response.status === 200) {
+                                console.log("Movie Deleted")
+                            } else {
+                                console.log("Check Movie name")
+                            }
+                        }).catch(err => {
+                            console.log("Check Movie name")
+                        });
                     alert("Movie Deleted")
+
                 } else {
-                    console.log("not done")
+                    console.log("Check Movie name")
                 }
 
             }).catch(err => {
                 alert("Check Movie name")
-            });;
+            });
+    }
+
+    searchMovie = (e) => {
+        e.preventDefault();
+
+        axios.get(Movie_IP + Movie_Port + `/movie/${this.state.movieName}`)
+            .then((response) => {
+                console.log("Status Code : ", response.data);
+                if (response.status === 200) {
+                    this.setState({
+                        movies: [response.data],
+
+                    });
+                } else {
+                    console.log("Check Movie name")
+                }
+
+            }).catch(err => {
+                alert("Check Movie name")
+            });
     }
 
     render() {
@@ -132,6 +166,9 @@ class Movies extends Component {
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link active" data-toggle="tab" href="#GetMovies" role="tab" aria-controls="home" aria-selected="true">Get All Movies</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#SearchMovie" role="tab" aria-controls="profile" aria-selected="false">Search Movie</a>
                     </li>
                     <ToggleDisplay if={localStorage.getItem('cookie') == "admin"}>
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -250,6 +287,42 @@ class Movies extends Component {
                                     </form>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="SearchMovie" role="tabpanel" aria-labelledby="settings-tab">
+                        <div className="row">
+                            <div className="col-lg-6 col-lg-offset-3  ">
+                                <div className="free-space"></div>
+                                <div className="row margin-top1 margin-bottom1">
+
+                                    <form class="form">
+                                        <div class="form-group col-lg-12">
+                                            <input onChange={this.change} type="text" class="form-control" name="movieName" id="movieName" placeholder="Movie Name" />
+                                        </div>
+                                        <div class="form-group col-lg-6">
+                                            <a onClick={this.searchMovie} class="form-control btn btn-primary btn-rounded" style={{ width: '50%' }} label="Next" href="" type="button">
+                                                <span class="btn__label">Search Movie</span></a></div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container">
+                            <h2>Movies</h2>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Movie Name</th>
+                                        <th>Language</th>
+                                        <th>Genre</th>
+                                        <th>Rating</th>
+                                        <th>Release Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {/*Display the Tbale row based on data recieved*/}
+                                    {movieDetails}
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

@@ -74,7 +74,7 @@ class Theatres extends Component {
                 if (response.status === 200) {
                     alert("Theatre Updated")
                 } else {
-                    console.log("not done")
+                    console.log("Check Theatre name")
                 }
 
             }).catch(err => {

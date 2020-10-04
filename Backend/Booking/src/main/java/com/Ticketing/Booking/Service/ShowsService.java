@@ -49,5 +49,14 @@ public class ShowsService {
 	public Optional<Shows> getShowsWithId(int showsId) {
 		return this.showsDao.findById(showsId);
 	}
+
+	public void deleteShowByMovieName(String movieName) {
+		this.showsDao.deleteByMovieName(movieName);
+	}
+
+	public void deleteShowByTheatreName(String theatreName) {
+		 this.showsDao.deleteByTheatreName(theatreName);
+		
+	}
 	
 }

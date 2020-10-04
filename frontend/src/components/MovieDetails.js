@@ -19,6 +19,8 @@ class MovieDetails extends Component {
             selectedDate:"",
             selectedTicketCount:"",
             theatre_shows:[],
+            selectedId:"",
+            seatingCapacity:"",
 
             show:false
         }
@@ -62,10 +64,11 @@ class MovieDetails extends Component {
                         theatre_map[showDetails[i].theatreName] = theatre_map[showDetails[i].theatreName] || [];
                         theatre_map[showDetails[i].theatreName].push(
                             <div>
-                                <a class="HitInfo__details hover_pointer" onClick={this.updateCart.bind(this,showDetails[i].theatreName, showDetails[i].showName, showDetails[i].date, showDetails[i].cost)}>
+                                <a class="HitInfo__details hover_pointer" onClick={this.updateCart.bind(this,showDetails[i].id, showDetails[i].theatreName, showDetails[i].showName, showDetails[i].date, showDetails[i].cost, showDetails[i].seatingCapacity)}>
                                 <div class=" Details__label">Show Name: {showDetails[i].showName}</div>
                                 <div class=" Details__label">Date: {showDetails[i].date}</div>
                                 <div class=" Details__label">Cost: {showDetails[i].cost}</div>
+                                <div class=" Details__label">Remaining Tickets: {showDetails[i].seatingCapacity}</div>
                                 </a>
                             </div>
                         );
@@ -94,6 +97,7 @@ class MovieDetails extends Component {
         var data = {
             userName: localStorage.getItem('email'),
             movieName: this.props.location.state.selectedMovieName,
+            id: this.state.selectedId,
             theatreName: this.state.selectedTheatre,
             showName: this.state.selectedShow,
             ticketCount: this.state.selectedTicketCount,
@@ -101,7 +105,10 @@ class MovieDetails extends Component {
             date: this.state.selectedDate,
             cancelled:false
         }
-        if(data.theatreName.length!=0){
+        if( data.ticketCount> this.state.seatingCapacity){
+            alert("Ticket count should be less than or equal to capacity")
+        }
+        else if(data.theatreName.length!=0){
             console.log("Booking data: " +data)
             await axios.post(Booking_IP + Booking_Port + '/booking', data)
                 .then((response) => {
@@ -127,12 +134,14 @@ class MovieDetails extends Component {
         })
     }
 
-    updateCart =(theatreName, showName, date, cost) =>{
+    updateCart =(id, theatreName, showName, date, cost, seatingCapacity) =>{
         this.setState({
+            selectedId:id,
             selectedCost:cost,
             selectedTheatre:theatreName,
             selectedShow:showName,
             selectedDate:date,
+            seatingCapacity:seatingCapacity,
 
             show:true
         })

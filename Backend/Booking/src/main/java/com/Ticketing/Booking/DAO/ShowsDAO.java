@@ -21,5 +21,9 @@ public interface ShowsDAO extends JpaRepository<Shows, Integer> {
 
 	List<Shows> findByTheatreNameAndMovieName(String theatreName, String movieName);
 
+	void deleteByMovieName(String movieName);
+
+	void deleteByTheatreName(String theatreName);
+
 }
 

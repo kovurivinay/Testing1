@@ -44,4 +44,13 @@ public class BookingService {
 		return this.bookingDao.findBookingById(bookingId);
 	}
 
+	public void deleteBookingByMovieName(String movieName) {
+		this.bookingDao.deleteByMovieName(movieName);		
+	}
+
+	public void deleteBookingByTheatreName(String theatreName) {
+		 this.bookingDao.deleteByTheatreName(theatreName);
+		
+	}
+
 }

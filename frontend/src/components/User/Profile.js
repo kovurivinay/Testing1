@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import '../../App.css';
 import axios from 'axios';
-import { Login_IP, Login_Port } from "./../../config";
+import { Login_IP, Login_Port, Booking_IP, Booking_Port } from "./../../config";
 
 
 class Profile extends Component {
@@ -11,6 +11,7 @@ class Profile extends Component {
             userName: "",
             email: "",
             phonenumber: "",
+            password:""
         }
         this.handleChange = this.handleChange.bind(this);
     }
@@ -50,7 +51,34 @@ class Profile extends Component {
             }).catch(err => {
                 console.log(err);
             });
+    }
 
+    deleteUser = () => {
+        axios.delete(Login_IP + Login_Port + `/user/${localStorage.getItem('email')}`, this.state)
+        .then((response) => {
+            console.log("Status Code : ", response.data);
+                    axios.post(Booking_IP + Booking_Port + `/cancelBooking/${localStorage.getItem('email')}` )
+                    .then((response) => {
+                        console.log(response.data)
+                    }).catch(err => {
+                        console.log(err);
+                    });
+
+                if(localStorage.getItem('cookie')=="customer"){
+                    console.log("Removed customer cookie")
+                    localStorage.removeItem('email')
+                    localStorage.removeItem('cookie')
+                }
+                else if (localStorage.getItem('cookie')=="admin") {
+                    console.log("Removed admin cookie")
+                    localStorage.removeItem('email')
+                    localStorage.removeItem('cookie')
+                }
+                alert("Deletion successful!")
+                this.props.history.push("/Home")
+        }).catch(err => {
+            console.log(err);
+        });
     }
 
     render() {
@@ -88,6 +116,10 @@ class Profile extends Component {
                                         <label>Phone Number</label>
                                         <input type="email" class="form-control" name="phonenumber" value={this.state.phonenumber} onChange={this.handleChange} placeholder="Phone Number" />
                                     </div>
+                                    <div class="form-group col-lg-7">
+                                        <label>Password</label>
+                                        <input type="text" class="form-control" name="password" value={this.state.password} onChange={this.handleChange} />
+                                    </div>
 
                                 </form>
                             </div>
@@ -96,6 +128,9 @@ class Profile extends Component {
                                 <div class="form-group col-lg-7">
                                     <button onClick={this.updateProfile.bind(this)} type="submit">Submit</button>
                                 </div>
+                                <div className="form-group col-lg-5">
+                            <button onClick={this.deleteUser.bind(this)} className="btn-danger">Delete User</button>
+                        </div>
                             </div>
                         </div>
                     </div>
