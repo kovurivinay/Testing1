@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.Ticketing.Booking.DAO.BookingDAO;
+import com.Ticketing.Booking.DAO.ShowsDAO;
 import com.Ticketing.Booking.Service.BookingService;
 import com.Ticketing.Booking.Service.ShowsService;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -39,6 +40,9 @@ public class BookingController {
 	
 	@Autowired
 	BookingDAO bookingDao;
+	
+	@Autowired
+	ShowsDAO showsDao;
 	
 	@Autowired
 	ShowsService showsService;
@@ -120,7 +124,7 @@ public class BookingController {
 	@PostMapping("/booking")
 	public ResponseEntity<Object> addNewBooking(@RequestBody Booking booking) {
 		try {
-				Optional<Shows> retrievedShow = this.showsService.getShowsWithId(booking.getId());
+				Optional<Shows> retrievedShow = this.showsService.getShowsWithId(booking.getShowId());
 				if (!retrievedShow.isPresent()) {
 					System.out.println("No show present!");
 					return new ResponseEntity<>("No show present with given theatrename and moviename!", HttpStatus.BAD_REQUEST);
@@ -188,6 +192,15 @@ public class BookingController {
 				return new ResponseEntity<Object>("Booking not found", HttpStatus.NOT_FOUND);
 			}
 			Booking currentBooking = retrievedBooking.get();
+			
+			Optional<Shows> retrievedShow = this.showsService.getShowsWithId(currentBooking.getShowId());
+			if(!retrievedShow.isPresent()) {
+				return new ResponseEntity<Object>("Show not found", HttpStatus.NOT_FOUND);
+			}
+			Shows currentShow = retrievedShow.get();
+			currentShow.setSeatingCapacity(currentBooking.getTicketCount() + currentShow.getSeatingCapacity());
+			this.showsDao.save(currentShow);
+			
 			currentBooking.setCancelled(true);
 			this.bookingDao.save(currentBooking);
 			
@@ -207,6 +220,14 @@ public class BookingController {
 			for(Booking currentBooking:bookings) {
 				currentBooking.setCancelled(true);
 				this.bookingDao.save(currentBooking);	
+				
+				Optional<Shows> retrievedShow = this.showsService.getShowsWithId(currentBooking.getShowId());
+				if(!retrievedShow.isPresent()) {
+					return new ResponseEntity<Object>("Show not found", HttpStatus.NOT_FOUND);
+				}
+				Shows currentShow = retrievedShow.get();
+				currentShow.setSeatingCapacity(currentBooking.getTicketCount() + currentShow.getSeatingCapacity());
+				this.showsDao.save(currentShow);
 			}
 			return ResponseEntity.ok().build();
 		} catch (Exception e) {

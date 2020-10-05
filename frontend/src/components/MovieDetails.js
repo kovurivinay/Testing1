@@ -97,7 +97,7 @@ class MovieDetails extends Component {
         var data = {
             userName: localStorage.getItem('email'),
             movieName: this.props.location.state.selectedMovieName,
-            id: this.state.selectedId,
+            showId: this.state.selectedId,
             theatreName: this.state.selectedTheatre,
             showName: this.state.selectedShow,
             ticketCount: this.state.selectedTicketCount,
@@ -109,7 +109,7 @@ class MovieDetails extends Component {
             alert("Ticket count should be less than or equal to capacity")
         }
         else if(data.theatreName.length!=0){
-            console.log("Booking data: " +data)
+            console.log(data)
             await axios.post(Booking_IP + Booking_Port + '/booking', data)
                 .then((response) => {
                     console.log("Response : ", response.data);

@@ -23,6 +23,9 @@ public class Booking {
 	@Column(name = "ID")
 	private int id;
 	
+	@Column(name = "SHOWID")
+	private int showId;
+	
 	@Column(name = "USERNAME")
 	private String userName;
 	
@@ -118,6 +121,14 @@ public class Booking {
 
 	public void setTheatreName(String theatreName) {
 		this.theatreName = theatreName;
+	}
+
+	public int getShowId() {
+		return showId;
+	}
+
+	public void setShowId(int showId) {
+		this.showId = showId;
 	}
 
 }
