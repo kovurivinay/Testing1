@@ -160,6 +160,13 @@ class Movies extends Component {
             )
         })
 
+        var movies = this.state.movies
+        let movieDropdownDetails = movies.map(movie => {
+            return (
+                <option value={movie.movieName}>{movie.movieName}</option>
+            )
+        })
+
         return (
             <div>
 
@@ -248,7 +255,14 @@ class Movies extends Component {
 
                                     <form class="form">
                                         <div class="form-group col-lg-12">
-                                            <input onChange={this.change} type="text" class="form-control" name="movieName" id="movieName" placeholder="Movie Name" />
+                                            <label>
+                                                Pick Movie:&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <select value={this.state.movieName} name="movieName" onChange={this.change}>
+                                                    <option value="">- Select a Movie -</option>
+                                                    {movieDropdownDetails}
+                                                </select>
+                                            </label>
+                                            {/* <input onChange={this.change} type="text" class="form-control" name="movieName" id="movieName" placeholder="Movie Name" /> */}
                                         </div>
                                         <div class="form-group col-lg-12">
                                             <input onChange={this.change} type="text" class="form-control" name="language" id="language" placeholder="Language" />

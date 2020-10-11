@@ -19,6 +19,9 @@ class Shows extends Component {
             showsId: "",
 
             shows: [],
+            
+            movies:[],
+            theatres: [],
         }
     }
 
@@ -33,7 +36,35 @@ class Shows extends Component {
                 });
             }).catch(err => {
                 console.log(err);
-            });
+            }).then(()=>{
+                axios.get(Movie_IP + Movie_Port + '/movies')
+                .then((response) => {
+                    //update the state with the response data
+                    console.log(response.data)
+                    this.setState({
+                        movies: response.data,
+    
+                    });
+                }).catch(err => {
+                    console.log(err);
+                });
+    
+            }).then(()=>{
+                axios.get(Theatre_IP + Theatre_Port + '/theatres')
+                .then((response) => {
+                    //update the state with the response data
+                    console.log(response.data)
+                    this.setState({
+                        theatres: response.data,
+    
+                    });
+                }).catch(err => {
+                    console.log(err);
+                });
+            })
+
+
+
     }
 
     change = (e) => {
@@ -106,7 +137,7 @@ class Shows extends Component {
 
         var d = new Date(this.state.date)
         this.state.date = d.getUTCDate() + "-" + (d.getUTCMonth() + 1) + "-" + d.getUTCFullYear();
-        
+
         const data = {
             theatreName: this.state.theatreName,
             movieName: this.state.movieName,
@@ -164,6 +195,27 @@ class Shows extends Component {
             )
         })
 
+        var movies = this.state.movies
+        let movieDetails = movies.map(movie => {
+            return (
+                <option value={movie.movieName}>{movie.movieName}</option>
+            )
+        })
+
+        var theatres = this.state.theatres
+        let theatreDetails = theatres.map(theatre => {
+            return (
+                <option value={theatre.theatreName}>{theatre.theatreName}</option>
+            )
+        })
+
+        var shows = this.state.shows
+        let showIdDetails = shows.map(show => {
+            return (
+                <option value={show.id}>{show.id}</option>
+            )
+        })
+        
         return (
             <div>
 
@@ -219,14 +271,37 @@ class Shows extends Component {
                                 <div className="row margin-top1 margin-bottom1">
 
                                     <form class="form">
-                                        <div class="form-group col-lg-12">
-                                            <input onChange={this.change} type="text" class="form-control" name="theatreName" id="theatreName" placeholder="Theatre Name" />
+                                    <div class="form-group col-lg-12">
+                                            <label>
+                                                Pick Theatre: &nbsp;&nbsp;&nbsp;&nbsp;
+                                                <select value={this.state.theatreName} name="theatreName" onChange={this.change}>
+                                                    <option value="">- Select a Theare -</option>
+                                                    {theatreDetails}
+                                                </select>
+                                            </label>
+                                            {/* <input onChange={this.change} type="text" class="form-control" name="theatreName" id="theatreName" placeholder="Theatre Name" /> */}
                                         </div>
                                         <div class="form-group col-lg-12">
-                                            <input onChange={this.change} type="text" class="form-control" name="movieName" id="movieName" placeholder="Movie Name" />
+                                            <label>
+                                                Pick Movie:&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <select value={this.state.movieName} name="movieName"onChange={this.change}>
+                                                <option value="">- Select a Movie -</option>
+                                                {movieDetails}
+                                                </select>
+                                            </label>
+                                            {/* <input onChange={this.change} type="text" class="form-control" name="movieName" id="movieName" placeholder="Movie Name" /> */}
                                         </div>
                                         <div class="form-group col-lg-12">
-                                            <input onChange={this.change} type="text" class="form-control" name="showName" id="showName" placeholder="Show Name" />
+                                            <label>
+                                                Pick Show:&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <select value={this.state.showName} name="showName"onChange={this.change}>
+                                                <option value="">- Select a Show Name -</option>
+                                                <option value="Morning">  Morning  </option>
+                                                <option value="Matinee">  Matinee  </option>
+                                                <option value="Evening">  Evening  </option>
+                                                </select>
+                                            </label>
+                                            {/* <input onChange={this.change} type="text" class="form-control" name="showName" id="showName" placeholder="Show Name" /> */}
                                         </div>
                                         <div class="form-group col-lg-12">
                                             <input onChange={this.change} type="text" class="form-control" name="seatingCapacity" id="seatingCapacity" placeholder="Seating Capacity" />
@@ -254,16 +329,46 @@ class Shows extends Component {
 
                                     <form class="form">
                                         <div class="form-group col-lg-12">
-                                            <input onChange={this.change} type="text" class="form-control" name="showsId" id="showsId" placeholder="Show Id" />
+                                            <label>
+                                                Pick Shows Id:&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <select value={this.state.showsId} name="showsId" onChange={this.change}>
+                                                    <option value="">- Select a Show Id-</option>
+                                                    {showIdDetails}
+                                                </select>
+                                            </label>
+                                            {/* <input onChange={this.change} type="text" class="form-control" name="showsId" id="showsId" placeholder="Show Id" /> */}
                                         </div>
                                         <div class="form-group col-lg-12">
-                                            <input onChange={this.change} type="text" class="form-control" name="theatreName" id="theatreName" placeholder="Theatre Name" />
+                                            <label>
+                                                Pick Theatre:&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <select value={this.state.theatreName} name="theatreName" onChange={this.change}>
+                                                    <option value="">- Select a Theare -</option>
+                                                    {theatreDetails}
+                                                </select>
+                                            </label>
+                                            {/* <input onChange={this.change} type="text" class="form-control" name="theatreName" id="theatreName" placeholder="Theatre Name" /> */}
                                         </div>
                                         <div class="form-group col-lg-12">
-                                            <input onChange={this.change} type="text" class="form-control" name="movieName" id="movieName" placeholder="Movie Name" />
+                                            <label>
+                                                Pick Movie:&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <select value={this.state.movieName} name="movieName"onChange={this.change}>
+                                                <option value="">- Select a Movie -</option>
+                                                {movieDetails}
+                                                </select>
+                                            </label>
+                                            {/* <input onChange={this.change} type="text" class="form-control" name="movieName" id="movieName" placeholder="Movie Name" /> */}
                                         </div>
                                         <div class="form-group col-lg-12">
-                                            <input onChange={this.change} type="text" class="form-control" name="showName" id="showName" placeholder="Show Name" />
+                                            <label>
+                                                Pick Show:&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <select value={this.state.showName} name="showName"onChange={this.change}>
+                                                <option value="">- Select a Show Name -</option>
+                                                <option value="Morning">  Morning  </option>
+                                                <option value="Matinee">  Matinee  </option>
+                                                <option value="Evening">  Evening  </option>
+                                                </select>
+                                            </label>
+                                            {/* <input onChange={this.change} type="text" class="form-control" name="showName" id="showName" placeholder="Show Name" /> */}
                                         </div>
                                         <div class="form-group col-lg-12">
                                             <input onChange={this.change} type="text" class="form-control" name="seatingCapacity" id="seatingCapacity" placeholder="Seating Capacity" />

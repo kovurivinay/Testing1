@@ -113,6 +113,13 @@ class Theatres extends Component {
             )
        })
 
+
+       var theatres = this.state.theatres
+       let theatreDropdownDetails = theatres.map(theatre => {
+           return (
+               <option value={theatre.theatreName}>{theatre.theatreName}</option>
+           )
+       })
         return (
             <div>
 
@@ -188,11 +195,18 @@ class Theatres extends Component {
                                     <div className="row margin-top1 margin-bottom1">
 
                                         <form class="form">
-                                            <div class="form-group col-lg-12">
-                                                <input onChange={this.change} type="text" class="form-control" name="updatetheatreName" id="updatetheatreName" placeholder="Theatre Name" />
-                                            </div>
-                                            <div class="form-group col-lg-12">
-                                                <input onChange={this.change} type="text" class="form-control" name="updatelocation" id="updatelocation" placeholder="Location" />
+                                        <div class="form-group col-lg-12">
+                                            <label>
+                                                Pick Theatre: &nbsp;&nbsp;&nbsp;&nbsp;
+                                                <select value={this.state.updatetheatreName} name="updatetheatreName" onChange={this.change}>
+                                                    <option value="">- Select a Theare -</option>
+                                                    {theatreDropdownDetails}
+                                                </select>
+                                            </label>
+                                            {/* <input onChange={this.change} type="text" class="form-control" name="updatetheatreName" id="updatetheatreName" placeholder="Theatre Name" /> */}
+                                        </div>
+                                        <div class="form-group col-lg-12">
+                                            <input onChange={this.change} type="text" class="form-control" name="updatelocation" id="updatelocation" placeholder="Location" />
                                             </div>
                                             <div class="form-group col-lg-12">
                                                 <input onChange={this.change} type="text" class="form-control" name="updateseatingCapacity" id="updateseatingCapacity" placeholder="Seating Capacity" />
